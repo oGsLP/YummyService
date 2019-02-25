@@ -1,7 +1,9 @@
-package com.xyf.yummy.service;
+package com.xyf.yummy.service.test;
 
-import com.xyf.yummy.entity.TestUser;
+import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.model.MyResult;
+
+import java.util.List;
 
 /**
  * @你大爷: XYF
@@ -11,5 +13,7 @@ import com.xyf.yummy.model.MyResult;
  * @Package: com.xyf.yummy.service
  */
 public interface TestService {
-    MyResult login(TestUser user);
+    MyResult login();
+
+    List<Address> getAddress(int id);
 }

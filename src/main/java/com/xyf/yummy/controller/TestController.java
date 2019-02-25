@@ -1,8 +1,7 @@
 package com.xyf.yummy.controller;
 
-import com.xyf.yummy.entity.TestUser;
 import com.xyf.yummy.model.MyResult;
-import com.xyf.yummy.service.TestService;
+import com.xyf.yummy.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,8 +23,8 @@ public class TestController {
     private TestService testService;
     @ResponseBody
     @PostMapping("/login")
-    public MyResult login(@RequestBody TestUser testUser){
-        return testService.login(testUser);
+    public MyResult login(){
+        return testService.login();
     }
 }
 

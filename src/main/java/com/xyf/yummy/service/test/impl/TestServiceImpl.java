@@ -1,29 +1,31 @@
-package com.xyf.yummy.service.impl;
+package com.xyf.yummy.service.test.impl;
 
+import com.xyf.yummy.dao.AddressMapper;
 import com.xyf.yummy.dao.MemberMapper;
-import com.xyf.yummy.dao.TestUserMapper;
+import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Member;
-import com.xyf.yummy.entity.TestUser;
 import com.xyf.yummy.model.MyResult;
-import com.xyf.yummy.service.TestService;
+import com.xyf.yummy.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @你大爷: XYF
  * @author: lenovo XYF
  * @Date: 2019/2/20
  * @Time: 16:23
- * @Package: com.xyf.yummy.service.impl
+ * @Package: com.xyf.yummy.service.shop.impl
  */
 @Service(value = "testService")
 public class TestServiceImpl implements TestService {
     @Autowired
-    private TestUserMapper userDao;
-    @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private AddressMapper addressMapper;
     @Override
-    public MyResult login(TestUser user) {
+    public MyResult login() {
 //        System.out.println();
 //        List<TestUser> list=new ArrayList<>();
 //        TestUser testUser=userDao.selectByPrimaryKey(2);
@@ -44,5 +46,10 @@ public class TestServiceImpl implements TestService {
         result.setList(null);
         result.setObject(member);
         return result;
+    }
+
+    @Override
+    public List<Address> getAddress(int id) {
+        return addressMapper.findAddressesByMemberId(1);
     }
 }

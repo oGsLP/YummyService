@@ -30,12 +30,32 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.xyf.yummy.dao" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-        <table tableName="t_test" domainObjectName="TestUser" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="t_member" domainObjectName="Member" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"  enableUpdateByExample="false">
-            <columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>
-            <columnOverride column="validation" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemValEnum" typeHandler="com.xyf.yummy.typeHandler.MemValTypeHandler"/>
+         <!--要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+
+
+        <!--<table tableName="t_member" domainObjectName="Member" enableCountByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"  enableUpdateByExample="false">-->
+            <!--<columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>-->
+            <!--<columnOverride column="validation" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemValEnum" typeHandler="com.xyf.yummy.typeHandler.MemValTypeHandler"/>-->
+        <!--</table>-->
+        <table tableName="t_merchant" domainObjectName="Merchant" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false"  enableUpdateByExample="false">
+            <columnOverride column="type" jdbcType="VARCHAR" javaType="com.xyf.yummy.model.enums.MerchantTypeEnum" typeHandler="com.xyf.yummy.typeHandler.MerTypTypeHandler"/>
+            <columnOverride column="vertification" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MerchantVerEnum" typeHandler="com.xyf.yummy.typeHandler.MerVerTypeHandler"/>
         </table>
+        <!--<table tableName="t_address" domainObjectName="Address" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <!--<table tableName="t_member_payment" domainObjectName="MemberPayment" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+
+ <!--<table tableName="t_member_discount" domainObjectName="MemberDiscount" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+
+
+
+
+        <!--<table tableName="t_profit" domainObjectName="Profit" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
 
     </context>
 </generatorConfiguration>

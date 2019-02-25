@@ -2,6 +2,8 @@ package com.xyf.yummy.typeHandler;
 
 import com.xyf.yummy.model.enums.MemValEnum;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
 import org.apache.ibatis.type.TypeHandler;
 
 import java.sql.CallableStatement;
@@ -16,6 +18,8 @@ import java.sql.SQLException;
  * @Time: 18:11
  * @Package: com.xyf.yummy.typeHandler
  */
+@MappedTypes(MemValEnum.class)
+@MappedJdbcTypes(JdbcType.INTEGER)
 public class MemValTypeHandler implements TypeHandler<MemValEnum> {
     @Override
     public void setParameter(PreparedStatement preparedStatement, int i, MemValEnum memValEnum, JdbcType jdbcType) throws SQLException {
