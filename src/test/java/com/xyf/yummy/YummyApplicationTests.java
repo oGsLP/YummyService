@@ -3,6 +3,7 @@ package com.xyf.yummy;
 import com.xyf.yummy.service.test.TestService;
 import com.xyf.yummy.util.CDKeyGenerator;
 import com.xyf.yummy.util.PasswordEncryption;
+import com.xyf.yummy.util.UUIDGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

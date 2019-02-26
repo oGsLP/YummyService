@@ -1,5 +1,6 @@
 package com.xyf.yummy.service.merchant.impl;
 
+import com.xyf.yummy.model.MerchantInfo;
 import com.xyf.yummy.service.merchant.MerchantManageService;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,23 @@ import org.springframework.stereotype.Service;
  */
 @Service(value = "merchantManageService")
 public class MerchantManageServiceImpl implements MerchantManageService {
+    @Override
+    public String apply() {
+        return null;
+    }
+
+    @Override
+    public String login(String cdkey, String password) {
+        return null;
+    }
+
+    @Override
+    public boolean submitInfo(MerchantInfo info) {
+        return false;
+    }
+
+    @Override
+    public MerchantInfo getInfo(String cdkey) {
+        return null;
+    }
 }
