@@ -33,40 +33,42 @@
          <!--要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
 
 
-        <table tableName="t_member" domainObjectName="Member" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false"  enableUpdateByExample="false">
-            <columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>
-            <columnOverride column="validation" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemValEnum" typeHandler="com.xyf.yummy.typeHandler.MemValTypeHandler"/>
-        </table>
-        <table tableName="t_merchant" domainObjectName="Merchant" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false"  enableUpdateByExample="false">
-            <columnOverride column="type" jdbcType="VARCHAR" javaType="com.xyf.yummy.model.enums.MerchantTypeEnum" typeHandler="com.xyf.yummy.typeHandler.MerTypTypeHandler"/>
-            <columnOverride column="vertification" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MerchantVerEnum" typeHandler="com.xyf.yummy.typeHandler.MerVerTypeHandler"/>
-        </table>
-        <table tableName="t_address" domainObjectName="Address" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="t_member_payment" domainObjectName="MemberPayment" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <!--<table tableName="t_member" domainObjectName="Member" enableCountByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"  enableUpdateByExample="false">-->
+            <!--<columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>-->
+            <!--<columnOverride column="validation" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemValEnum" typeHandler="com.xyf.yummy.typeHandler.MemValTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="t_merchant" domainObjectName="Merchant" enableCountByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false"  enableUpdateByExample="false">-->
+            <!--<columnOverride column="type" jdbcType="VARCHAR" javaType="com.xyf.yummy.model.enums.MerchantTypeEnum" typeHandler="com.xyf.yummy.typeHandler.MerTypTypeHandler"/>-->
+            <!--<columnOverride column="vertification" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MerchantVerEnum" typeHandler="com.xyf.yummy.typeHandler.MerVerTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="t_address" domainObjectName="Address" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <!--<table tableName="t_member_payment" domainObjectName="MemberPayment" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
 
         <table tableName="t_member_discount" domainObjectName="MemberDiscount" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="t_merchant_discount" domainObjectName="MerchantDiscount" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="t_dish" domainObjectName="Dish" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <columnOverride column="kind" jdbcType="VARCHAR" javaType="com.xyf.yummy.model.enums.DishTypeEnum" typeHandler="com.xyf.yummy.typeHandler.DishTypTypeHandler"/>
+            <columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>
         </table>
-        <table tableName="t_pack" domainObjectName="Pack" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
-        <table tableName="t_deal" domainObjectName="Deal" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <columnOverride column="state" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.DealStateEnum" typeHandler="com.xyf.yummy.typeHandler.DealStateTypeHandler"/>
-        </table>
+        <!--<table tableName="t_merchant_discount" domainObjectName="MerchantDiscount" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <!--<table tableName="t_dish" domainObjectName="Dish" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<columnOverride column="kind" jdbcType="VARCHAR" javaType="com.xyf.yummy.model.enums.DishTypeEnum" typeHandler="com.xyf.yummy.typeHandler.DishTypTypeHandler"/>-->
+        <!--</table>-->
+        <!--<table tableName="t_pack" domainObjectName="Pack" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
+        <!--<table tableName="t_deal" domainObjectName="Deal" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<columnOverride column="state" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.DealStateEnum" typeHandler="com.xyf.yummy.typeHandler.DealStateTypeHandler"/>-->
+        <!--</table>-->
 
 
 
-        <table tableName="t_profit" domainObjectName="Profit" enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>
+        <!--<table tableName="t_profit" domainObjectName="Profit" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
 
     </context>
 </generatorConfiguration>

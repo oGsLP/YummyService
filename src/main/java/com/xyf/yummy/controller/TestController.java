@@ -2,6 +2,7 @@ package com.xyf.yummy.controller;
 
 import com.xyf.yummy.model.MyResult;
 import com.xyf.yummy.service.test.TestService;
+import com.xyf.yummy.util.VertificationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,14 +18,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Package: com.xyf.yummy.controller
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/yummy")
 public class TestController {
     @Autowired
     private TestService testService;
     @ResponseBody
     @PostMapping("/login")
     public MyResult login(){
-        return testService.login();
+        MyResult result=new MyResult();
+        result.setMsg(VertificationCodeGenerator.getInstance().getVertificationCode());
+        result.setObject(testService.getSixCode());
+        result.setCode(1);
+        result.setList(null);
+        return result;
     }
 }
 

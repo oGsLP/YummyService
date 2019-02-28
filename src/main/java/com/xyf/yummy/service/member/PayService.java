@@ -12,32 +12,39 @@ public interface PayService {
 
     /**
      *
+     * @param mem_id
      * @param account
      * @param password
      * @return
      */
-    boolean addPayment(String account, String password);
+    boolean addPayment(int mem_id, String account, String password);
+
 
     /**
      *
+     * @param mem_id
      * @param account
      * @param password
      * @return
      */
-    boolean checkPayment(String account, String password);
+    boolean checkPayment(int mem_id, String account, String password);
+
 
     /**
      *
+     * @param pay_id
      * @param price
      * @return
      */
-    boolean pay(double price);
+    boolean pay(int pay_id, double price);
+
 
     /**
      *
+     * @param pay_id
      * @param price
      * @return
      */
-    boolean refund(double price);
+    boolean refund(int pay_id, double price);
 
 }

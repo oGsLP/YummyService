@@ -1,11 +1,16 @@
 package com.xyf.yummy.service.test.impl;
 
 import com.xyf.yummy.dao.AddressMapper;
+import com.xyf.yummy.dao.DishMapper;
 import com.xyf.yummy.dao.MemberMapper;
+import com.xyf.yummy.dao.PackMapper;
 import com.xyf.yummy.entity.Address;
+import com.xyf.yummy.entity.Dish;
 import com.xyf.yummy.entity.Member;
+import com.xyf.yummy.entity.Pack;
 import com.xyf.yummy.model.MyResult;
 import com.xyf.yummy.service.test.TestService;
+import com.xyf.yummy.util.VertificationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +29,10 @@ public class TestServiceImpl implements TestService {
     private MemberMapper memberMapper;
     @Autowired
     private AddressMapper addressMapper;
+    @Autowired
+    private DishMapper dishMapper;
+    @Autowired
+    private PackMapper packMapper;
     @Override
     public MyResult login() {
 //        System.out.println();
@@ -52,4 +61,36 @@ public class TestServiceImpl implements TestService {
     public List<Address> getAddress(int id) {
         return addressMapper.findAddressesByMemberId(1);
     }
+
+    @Override
+    public void addDish(Dish dish) {
+        dishMapper.insert(dish);
+    }
+
+    @Override
+    public Dish getDish(int dish_id) {
+        return dishMapper.selectByPrimaryKey(dish_id);
+    }
+
+    @Override
+    public void addPack(Pack pack) {
+        packMapper.insert(pack);
+    }
+
+    @Override
+    public void testPKBack(int id, Address address) {
+        if(address.getId()!=null)
+            System.out.println("Not null");
+        else System.out.println("null");
+        addressMapper.insertSelective(address);
+        System.out.println(address.getId());
+        addressMapper.addMemberAddress(id, address.getId());
+    }
+
+    @Override
+    public String getSixCode() {
+        return VertificationCodeGenerator.getInstance().getVertificationCode();
+    }
+
+
 }

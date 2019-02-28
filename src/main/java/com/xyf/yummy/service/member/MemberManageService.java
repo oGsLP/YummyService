@@ -14,16 +14,16 @@ public interface MemberManageService {
 
     /**
      *
+     * @param id
      * @return
      */
-    MemberInfo getInfo();
+    MemberInfo getInfo(int id);
 
     /**
      *
      * @param info
-     * @return
      */
-    boolean modifyInfo(MemberInfo info);
+    void modifyInfo(MemberInfo info);
 
     /**
      *
@@ -34,10 +34,26 @@ public interface MemberManageService {
 
     /**
      *
+     * @param mem_id
+     * @param address
+     * @return
+     */
+    boolean addAddress(int mem_id, Address address);
+
+    /**
+     *
      * @param id
      * @return
      */
     boolean deleteAddress(int id);
+
+    /**
+     *
+     * @param mem_id
+     * @param id
+     * @return
+     */
+    boolean deleteAddress(int mem_id, int id);
 
     /**
      *

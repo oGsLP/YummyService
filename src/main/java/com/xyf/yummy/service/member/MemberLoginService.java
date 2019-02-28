@@ -17,12 +17,13 @@ public interface MemberLoginService {
      */
     boolean register(String email, String password);
 
+
     /**
      *
-     * @param key
+     * @param email
      * @return
      */
-    boolean checkKey(String email, String key);
+    String getKey(String email);
 
     /**
      *

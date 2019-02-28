@@ -115,7 +115,7 @@
 #### 会员等级优惠政策（打折）
 * t_member_discount
 * id int pk ++
-* level int 
+* level int //enum
 * discount double //0.01-0.99
 
 #### 餐厅
@@ -124,7 +124,7 @@
 * cdkey varchar(7)
 * name varchar(20)
 * type varchar(20) // enum 'other' 其他
-* phone varchar(20)
+* password varchar(20)
 * ad_id fk
 * vertification int // enum
 
@@ -231,6 +231,7 @@
   * refund
 * MerchantManageService
   * apply
+  * register
   * login
   * submitInfo
   * getInfo
@@ -261,6 +262,7 @@
   * modifyRatio
   * getLevels
   * modifyLevels
+  * getApplies
   * failApply
   * passApply
 * MemberDataGatherService

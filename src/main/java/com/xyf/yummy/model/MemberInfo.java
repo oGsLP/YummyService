@@ -10,6 +10,7 @@ import com.xyf.yummy.entity.Member;
  * @Package: com.xyf.yummy.model
  */
 public class MemberInfo {
+    private int id;
     private String email;
     private String phone;
     private String name;
@@ -17,16 +18,26 @@ public class MemberInfo {
     public MemberInfo() {
     }
 
-    public MemberInfo(String email, String phone, String name) {
+    public MemberInfo(int id, String email, String phone, String name) {
+        this.id=id;
         this.email = email;
         this.phone = phone;
         this.name = name;
     }
 
     public MemberInfo(Member member){
+        this.id=member.getId();
         this.email=member.getEmail();
         this.phone=member.getPhone();
         this.name=member.getName();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {

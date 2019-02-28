@@ -1,6 +1,13 @@
 package com.xyf.yummy.service.member.impl;
 
+import com.xyf.yummy.dao.MemberMapper;
+import com.xyf.yummy.entity.Member;
+import com.xyf.yummy.model.enums.MemValEnum;
 import com.xyf.yummy.service.member.MemberLoginService;
+import com.xyf.yummy.util.PasswordEncryption;
+import com.xyf.yummy.util.UUIDGenerator;
+import com.xyf.yummy.util.VertificationCodeGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,23 +20,45 @@ import org.springframework.stereotype.Service;
 
 @Service(value = "memberLoginService")
 public class MemberLoginServiceImpl implements MemberLoginService {
+    private PasswordEncryption encryption = PasswordEncryption.getEncryption();
+    private UUIDGenerator uuidGenerator = UUIDGenerator.getInstance();
+    private VertificationCodeGenerator codeGenerator = VertificationCodeGenerator.getInstance();
+    @Autowired
+    private MemberMapper memberMapper;
     @Override
     public boolean register(String email, String password) {
-        return false;
+        MemValEnum valEnum=memberMapper.checkAccount(email);
+        if(valEnum==null)
+            return false;
+        else if(valEnum.equals(MemValEnum.CANCELLED))
+            return false;
+        else {
+            Member member=new Member();
+            member.setEmail(email);member.setPassword(encryption.encrypt_md5_16bits(password));
+            member.setName("User"+uuidGenerator.getUUID_str_16bits());
+            memberMapper.insertSelective(member);
+            return true;
+        }
     }
 
     @Override
-    public boolean checkKey(String email, String key) {
-        return false;
+    public String getKey(String email) {
+        String code=codeGenerator.getVertificationCode();
+        codeGenerator.sendCode(email,code);
+        return code;
     }
+
 
     @Override
     public boolean login(String email, String password) {
-        return false;
+        String name=memberMapper.checkLogin(email,encryption.encrypt_md5_16bits(password));
+        return name != null;
     }
 
     @Override
     public void cancelAccount(String email) {
-
+        if(memberMapper.getIdByEmail(email) == null) {
+            memberMapper.cancelAccount(memberMapper.getIdByEmail(email));
+        }
     }
 }

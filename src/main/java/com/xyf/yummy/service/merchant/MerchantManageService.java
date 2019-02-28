@@ -24,7 +24,15 @@ public interface MerchantManageService {
      * @param password
      * @return
      */
-    String login(String cdkey,String password);
+    boolean register(String cdkey, String password);
+
+    /**
+     *
+     * @param cdkey
+     * @param password
+     * @return
+     */
+    boolean login(String cdkey,String password);
 
     /**
      *
