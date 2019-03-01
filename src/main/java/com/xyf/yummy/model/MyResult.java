@@ -15,6 +15,16 @@ public class MyResult {
     private List<?> list;
     private Object object;
 
+    public MyResult() {
+    }
+
+    public MyResult(int code, String msg, List<?> list, Object object) {
+        this.code = code;
+        this.msg = msg;
+        this.list = list;
+        this.object = object;
+    }
+
     public int getCode() {
         return code;
     }

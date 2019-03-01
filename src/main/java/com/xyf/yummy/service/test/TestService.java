@@ -2,8 +2,10 @@ package com.xyf.yummy.service.test;
 
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Dish;
+import com.xyf.yummy.entity.MemberDiscount;
 import com.xyf.yummy.entity.Pack;
 import com.xyf.yummy.model.MyResult;
+import com.xyf.yummy.model.enums.MemValEnum;
 
 import java.util.List;
 
@@ -28,4 +30,12 @@ public interface TestService {
     void testPKBack(int id, Address address);
 
     String getSixCode();
+
+    MemValEnum checkAccount(String email);
+
+    Integer getIdByEmail(String email);
+
+    void cancelMember(int id);
+
+    List<MemberDiscount> getDiscounts();
 }

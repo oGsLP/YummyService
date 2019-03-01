@@ -116,6 +116,7 @@
 * t_member_discount
 * id int pk ++
 * level int //enum
+* min double
 * discount double //0.01-0.99
 
 #### 餐厅

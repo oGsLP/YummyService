@@ -2,11 +2,13 @@ package com.xyf.yummy.service.member.impl;
 
 import com.xyf.yummy.dao.MemberMapper;
 import com.xyf.yummy.entity.Member;
+import com.xyf.yummy.model.MemberLog;
 import com.xyf.yummy.model.enums.MemValEnum;
 import com.xyf.yummy.service.member.MemberLoginService;
 import com.xyf.yummy.util.PasswordEncryption;
 import com.xyf.yummy.util.UUIDGenerator;
 import com.xyf.yummy.util.VertificationCodeGenerator;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +28,11 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Autowired
     private MemberMapper memberMapper;
     @Override
-    public boolean register(String email, String password) {
+    public boolean register(MemberLog log) {
+        String email=log.getEmail();
+        String password=log.getPassword();
         MemValEnum valEnum=memberMapper.checkAccount(email);
-        if(valEnum==null)
-            return false;
-        else if(valEnum.equals(MemValEnum.CANCELLED))
+        if(valEnum!=null)
             return false;
         else {
             Member member=new Member();
@@ -50,15 +52,15 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
 
     @Override
-    public boolean login(String email, String password) {
-        String name=memberMapper.checkLogin(email,encryption.encrypt_md5_16bits(password));
+    public boolean login(MemberLog log) {
+        String name=memberMapper.checkLogin(log.getEmail(),encryption.encrypt_md5_16bits(log.getPassword()));
         return name != null;
     }
 
     @Override
     public void cancelAccount(String email) {
         if(memberMapper.getIdByEmail(email) == null) {
-            memberMapper.cancelAccount(memberMapper.getIdByEmail(email));
+            memberMapper.cancelAccount(memberMapper.getIdByEmail(email),MemValEnum.CANCELLED);
         }
     }
 }

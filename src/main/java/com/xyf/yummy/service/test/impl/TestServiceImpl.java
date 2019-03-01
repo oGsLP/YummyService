@@ -1,14 +1,9 @@
 package com.xyf.yummy.service.test.impl;
 
-import com.xyf.yummy.dao.AddressMapper;
-import com.xyf.yummy.dao.DishMapper;
-import com.xyf.yummy.dao.MemberMapper;
-import com.xyf.yummy.dao.PackMapper;
-import com.xyf.yummy.entity.Address;
-import com.xyf.yummy.entity.Dish;
-import com.xyf.yummy.entity.Member;
-import com.xyf.yummy.entity.Pack;
+import com.xyf.yummy.dao.*;
+import com.xyf.yummy.entity.*;
 import com.xyf.yummy.model.MyResult;
+import com.xyf.yummy.model.enums.MemValEnum;
 import com.xyf.yummy.service.test.TestService;
 import com.xyf.yummy.util.VertificationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +28,8 @@ public class TestServiceImpl implements TestService {
     private DishMapper dishMapper;
     @Autowired
     private PackMapper packMapper;
+    @Autowired
+    private MemberDiscountMapper memberDiscountMapper;
     @Override
     public MyResult login() {
 //        System.out.println();
@@ -90,6 +87,26 @@ public class TestServiceImpl implements TestService {
     @Override
     public String getSixCode() {
         return VertificationCodeGenerator.getInstance().getVertificationCode();
+    }
+
+    @Override
+    public MemValEnum checkAccount(String email) {
+        return memberMapper.checkAccount(email);
+    }
+
+    @Override
+    public Integer getIdByEmail(String email) {
+        return memberMapper.getIdByEmail(email);
+    }
+
+    @Override
+    public void cancelMember(int id) {
+        memberMapper.cancelAccount(id,MemValEnum.CANCELLED);
+    }
+
+    @Override
+    public List<MemberDiscount> getDiscounts() {
+        return memberDiscountMapper.getDiscounts();
     }
 
 

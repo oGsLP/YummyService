@@ -1,8 +1,10 @@
 package com.xyf.yummy.service.admin.impl;
 
+import com.xyf.yummy.dao.MemberDiscountMapper;
 import com.xyf.yummy.entity.MemberDiscount;
 import com.xyf.yummy.model.MerchantInfo;
 import com.xyf.yummy.service.admin.AdminManageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,10 @@ import java.util.List;
  */
 @Service(value = "adminManageService")
 public class AdminManageServiceImpl implements AdminManageService {
+
+    @Autowired
+    private MemberDiscountMapper memberDiscountMapper;
+
     @Override
     public double getRatio() {
         return 0;
@@ -33,12 +39,14 @@ public class AdminManageServiceImpl implements AdminManageService {
 
     @Override
     public List<MemberDiscount> getMemberDiscounts() {
-        return null;
+        return memberDiscountMapper.getDiscounts();
     }
 
     @Override
     public void modifyMemberDiscounts(List<MemberDiscount> discounts) {
-
+        for(MemberDiscount discount: discounts){
+            memberDiscountMapper.updateByPrimaryKeySelective(discount);
+        }
     }
 
     @Override

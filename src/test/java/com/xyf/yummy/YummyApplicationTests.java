@@ -2,6 +2,7 @@ package com.xyf.yummy;
 
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Dish;
+import com.xyf.yummy.entity.MemberDiscount;
 import com.xyf.yummy.model.enums.DishTypeEnum;
 import com.xyf.yummy.service.test.TestService;
 import com.xyf.yummy.util.CDKeyGenerator;
@@ -36,11 +37,16 @@ public class YummyApplicationTests {
 
         System.out.println(testService.getDish(1).getDeadline());
 
-        Address address=new Address();
-        address.setLatitude(5.5);
-        address.setLongitude(8.8);
-        address.setNote("dasd");
-        testService.testPKBack(1,address);
+
+        System.out.println(PasswordEncryption.getEncryption().encrypt_md5_16bits("123312"));
+
+        System.out.println(testService.checkAccount("1144313@qwer.com")==null?"null":"not null");
+
+        System.out.println(testService.getIdByEmail("11443213@qwer.com"));
+
+        for(MemberDiscount memberDiscount:testService.getDiscounts()){
+            System.out.println(memberDiscount.getLevel().getName()+"||"+memberDiscount.getMin()+"||"+memberDiscount.getDiscount());
+        }
     }
 
 }

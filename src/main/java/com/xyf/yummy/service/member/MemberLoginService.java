@@ -1,5 +1,7 @@
 package com.xyf.yummy.service.member;
 
+import com.xyf.yummy.model.MemberLog;
+
 /**
  * @你大爷: XYF
  * @author: lenovo XYF
@@ -9,13 +11,13 @@ package com.xyf.yummy.service.member;
  */
 public interface MemberLoginService {
 
+
     /**
      *
-     * @param email
-     * @param password
+     * @param log
      * @return
      */
-    boolean register(String email, String password);
+    boolean register(MemberLog log);
 
 
     /**
@@ -27,11 +29,10 @@ public interface MemberLoginService {
 
     /**
      *
-     * @param email
-     * @param password
+     * @param log
      * @return
      */
-    boolean login(String email, String password);
+    boolean login(MemberLog log);
 
     /**
      *

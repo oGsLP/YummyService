@@ -1,9 +1,7 @@
 package com.xyf.yummy.service.admin;
 
 import com.xyf.yummy.entity.MemberDiscount;
-import com.xyf.yummy.entity.Merchant;
 import com.xyf.yummy.model.MerchantInfo;
-import com.xyf.yummy.model.enums.MemLvEnum;
 
 import java.util.List;
 
