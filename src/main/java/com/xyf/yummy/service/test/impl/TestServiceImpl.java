@@ -9,6 +9,7 @@ import com.xyf.yummy.util.VertificationCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -107,6 +108,16 @@ public class TestServiceImpl implements TestService {
     @Override
     public List<MemberDiscount> getDiscounts() {
         return memberDiscountMapper.getDiscounts();
+    }
+
+    @Override
+    public List<Dish> getDishesByTime(Date date, int id) {
+        return dishMapper.getCurrentDishes(date,id);
+    }
+
+    @Override
+    public Pack getPack(int pack_id) {
+        return packMapper.selectByPrimaryKey(pack_id);
     }
 
 

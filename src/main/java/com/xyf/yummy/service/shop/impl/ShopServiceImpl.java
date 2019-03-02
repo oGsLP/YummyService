@@ -37,11 +37,11 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<Dish> getCurrentDishes(int mer_id) {
-        return dishMapper.getCurrentDishes(new Date(), mer_id);
+        return dishMapper.getCurrentDishes(new Date(System.currentTimeMillis() + 15 * 60 * 1000), mer_id);
     }
 
     @Override
     public List<Pack> getCurrentPacks(int mer_id) {
-        return packMapper.getCurrentPacks(new Date(), mer_id);
+        return packMapper.getCurrentPacks(new Date(System.currentTimeMillis() + 15 * 60 * 1000), mer_id);
     }
 }

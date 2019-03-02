@@ -36,14 +36,18 @@ public class MerchantManageServiceImpl implements MerchantManageService {
 
     @Override
     public boolean register(String cdkey, String password) {
-        Merchant merchant = new Merchant();
-        merchant.setCdkey(cdkey);merchant.setPassword(encryption.encrypt_md5_16bits(password));
-        return merchantMapper.insertSelective(merchant)==1;
+        if(merchantMapper.getMerchantByCdkey(cdkey)!=null)
+            return false;
+        else {
+            Merchant merchant = new Merchant();
+            merchant.setCdkey(cdkey);merchant.setPassword(encryption.encrypt_md5_16bits(password));
+            return merchantMapper.insertSelective(merchant)==1;
+        }
     }
 
     @Override
     public boolean login(String cdkey, String password) {
-        return merchantMapper.checkLogin(cdkey,password)!=null;
+        return merchantMapper.checkLogin(cdkey,encryption.encrypt_md5_16bits(password))!=null;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class MerchantManageServiceImpl implements MerchantManageService {
         Address address = info.getAddress();
         addressMapper.insertSelective(address);
         Merchant merchant = new Merchant();
-        merchant.setAddress(address);
+        merchant.setAdId(address.getId());
         merchant.setType(info.getType());
         merchant.setName(info.getName());
         return merchantMapper.insertSelective(merchant)==1;

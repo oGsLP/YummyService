@@ -7,6 +7,7 @@ import com.xyf.yummy.entity.Pack;
 import com.xyf.yummy.model.MyResult;
 import com.xyf.yummy.model.enums.MemValEnum;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,4 +39,8 @@ public interface TestService {
     void cancelMember(int id);
 
     List<MemberDiscount> getDiscounts();
+
+    List<Dish> getDishesByTime(Date date, int id);
+
+    Pack getPack(int pack_id);
 }

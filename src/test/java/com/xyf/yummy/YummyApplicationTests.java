@@ -47,6 +47,12 @@ public class YummyApplicationTests {
         for(MemberDiscount memberDiscount:testService.getDiscounts()){
             System.out.println(memberDiscount.getLevel().getName()+"||"+memberDiscount.getMin()+"||"+memberDiscount.getDiscount());
         }
+
+        System.out.println(testService.getDishesByTime(new Date(),1).size());
+        System.out.println(testService.getDishesByTime(new Date(System.currentTimeMillis() + 60 * 60 * 1000),1).size());
+
+        System.out.println(testService.getPack(1).getDishes().size());
+        System.out.println(testService.getPack(1).getDishes().get(1).getDish().getName());
     }
 
 }

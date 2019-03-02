@@ -57,7 +57,7 @@ public class DishManageServiceImpl implements DishManageService {
         if(sign==1){
             for (DishInPack dish: pack.getDishes()
                  ) {
-                sign*=packMapper.addDishPack(pack.getId(),dish.getDish().getId());
+                sign*=packMapper.addDishPack(pack.getId(),dish.getDish().getId(),dish.getNum());
             }
         }
         return sign==1;
@@ -70,7 +70,7 @@ public class DishManageServiceImpl implements DishManageService {
         if(sign>0){
             for (DishInPack dish: pack.getDishes()
             ) {
-                sign*=packMapper.addDishPack(pack.getId(),dish.getDish().getId());
+                sign*=packMapper.addDishPack(pack.getId(),dish.getDish().getId(),dish.getNum());
             }
         }
         return sign==1;
