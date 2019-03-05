@@ -2,7 +2,7 @@ package com.xyf.yummy.service.test.impl;
 
 import com.xyf.yummy.dao.*;
 import com.xyf.yummy.entity.*;
-import com.xyf.yummy.model.MyResult;
+import com.xyf.yummy.model.ModelBean;
 import com.xyf.yummy.model.enums.MemValEnum;
 import com.xyf.yummy.service.test.TestService;
 import com.xyf.yummy.util.VertificationCodeGenerator;
@@ -32,11 +32,11 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private MemberDiscountMapper memberDiscountMapper;
     @Override
-    public MyResult login() {
+    public ModelBean login() {
 //        System.out.println();
 //        List<TestUser> list=new ArrayList<>();
 //        TestUser testUser=userDao.selectByPrimaryKey(2);
-        MyResult result=new MyResult();
+        ModelBean result=new ModelBean();
 //        if(testUser.getUsername().equals(user.getUsername())){
 //            result.setCode(0);
 //            result.setMsg("login success");
@@ -119,6 +119,7 @@ public class TestServiceImpl implements TestService {
     public Pack getPack(int pack_id) {
         return packMapper.selectByPrimaryKey(pack_id);
     }
+
 
 
 }

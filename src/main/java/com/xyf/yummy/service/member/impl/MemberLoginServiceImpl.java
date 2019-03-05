@@ -52,9 +52,8 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
 
     @Override
-    public boolean login(MemberLog log) {
-        String name=memberMapper.checkLogin(log.getEmail(),encryption.encrypt_md5_16bits(log.getPassword()));
-        return name != null;
+    public String login(MemberLog log) {
+        return memberMapper.checkLogin(log.getEmail(),encryption.encrypt_md5_16bits(log.getPassword()));
     }
 
     @Override

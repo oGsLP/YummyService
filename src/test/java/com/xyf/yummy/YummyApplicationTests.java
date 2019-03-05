@@ -3,7 +3,9 @@ package com.xyf.yummy;
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Dish;
 import com.xyf.yummy.entity.MemberDiscount;
+import com.xyf.yummy.model.MemberLog;
 import com.xyf.yummy.model.enums.DishTypeEnum;
+import com.xyf.yummy.service.member.MemberLoginService;
 import com.xyf.yummy.service.test.TestService;
 import com.xyf.yummy.util.CDKeyGenerator;
 import com.xyf.yummy.util.PasswordEncryption;
@@ -24,6 +26,8 @@ public class YummyApplicationTests {
 
     @Autowired
     TestService testService;
+    @Autowired
+    MemberLoginService memberLoginService;
 
 
     @Test
@@ -53,6 +57,10 @@ public class YummyApplicationTests {
 
         System.out.println(testService.getPack(1).getDishes().size());
         System.out.println(testService.getPack(1).getDishes().get(1).getDish().getName());
+//        MemberLog memberLog=new MemberLog();
+//        memberLog.setEmail("member123@xxx.com");memberLog.setPassword("123456");
+//        System.out.println(memberLoginService.register(memberLog));
+//        ;
     }
 
 }

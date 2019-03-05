@@ -9,20 +9,33 @@ import java.util.List;
  * @Time: 16:25
  * @Package: com.xyf.yummy.model
  */
-public class MyResult {
+public class ModelBean {
     private int code;
+    //1-成功 0-失败
     private String msg;
     private List<?> list;
     private Object object;
 
-    public MyResult() {
+    public ModelBean() {
     }
 
-    public MyResult(int code, String msg, List<?> list, Object object) {
+    public ModelBean(int code, String msg, Object object, List<?> list) {
         this.code = code;
         this.msg = msg;
-        this.list = list;
         this.object = object;
+        this.list = list;
+    }
+    public ModelBean(int code, String msg, Object object) {
+        this.code = code;
+        this.msg = msg;
+        this.object = object;
+        this.list = null;
+    }
+    public ModelBean(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+        this.object = null;
+        this.list = null;
     }
 
     public int getCode() {

@@ -32,7 +32,7 @@ public interface MemberLoginService {
      * @param log
      * @return
      */
-    boolean login(MemberLog log);
+    String login(MemberLog log);
 
     /**
      *
