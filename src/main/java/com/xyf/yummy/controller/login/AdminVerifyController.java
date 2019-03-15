@@ -4,10 +4,7 @@ import com.xyf.yummy.model.AdminCode;
 import com.xyf.yummy.model.ModelBean;
 import com.xyf.yummy.service.admin.AdminManageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -18,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @Package: com.xyf.yummy.controller.login
  */
 @RestController
-@RequestMapping("/yummy/admin")
-public class AdminLoginController {
+@RequestMapping("/yummy/login/admin")
+public class AdminVerifyController {
 
     @Autowired
     private AdminManageService manageService;
 
-    @PostMapping("/login")
+    @PostMapping("")
     public ModelBean login(@RequestBody AdminCode adminCode){
-        if(1==1)
+        if(manageService.login(adminCode))
             return new ModelBean(1,"Welcome Admin");
         else return new ModelBean(0,"Wrong identification! You're not allowed to access");
     }

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  * @Package: com.xyf.yummy.controller.login
  */
 @RestController
-@RequestMapping("/yummy/merchant")
+@RequestMapping("/yummy/login/merchant")
 public class MerchantLoginController {
 
     @Autowired

@@ -48,10 +48,13 @@
         <!--<table tableName="t_member_payment" domainObjectName="MemberPayment" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
 
-        <table tableName="t_member_discount" domainObjectName="MemberDiscount" enableCountByExample="false" enableUpdateByExample="false"
+        <table tableName="t_member_consumption" domainObjectName="MemberConsumption" enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
-            <columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>
         </table>
+        <!--<table tableName="t_member_discount" domainObjectName="MemberDiscount" enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<columnOverride column="level" jdbcType="INTEGER" javaType="com.xyf.yummy.model.enums.MemLvEnum" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler"/>-->
+        <!--</table>-->
         <!--<table tableName="t_merchant_discount" domainObjectName="MerchantDiscount" enableCountByExample="false" enableUpdateByExample="false"-->
                <!--enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"/>-->
         <!--<table tableName="t_dish" domainObjectName="Dish" enableCountByExample="false" enableUpdateByExample="false"-->

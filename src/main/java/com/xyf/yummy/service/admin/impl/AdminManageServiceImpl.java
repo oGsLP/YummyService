@@ -1,12 +1,20 @@
 package com.xyf.yummy.service.admin.impl;
 
 import com.xyf.yummy.dao.MemberDiscountMapper;
+import com.xyf.yummy.dao.MerchantMapper;
+import com.xyf.yummy.dao.ProfitMapper;
 import com.xyf.yummy.entity.MemberDiscount;
+import com.xyf.yummy.entity.Merchant;
+import com.xyf.yummy.entity.Profit;
+import com.xyf.yummy.model.AdminCode;
 import com.xyf.yummy.model.MerchantInfo;
+import com.xyf.yummy.model.enums.MerchantVerEnum;
 import com.xyf.yummy.service.admin.AdminManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,21 +28,37 @@ import java.util.List;
 public class AdminManageServiceImpl implements AdminManageService {
 
     @Autowired
+    private ProfitMapper profitMapper;
+
+    @Autowired
     private MemberDiscountMapper memberDiscountMapper;
 
+    @Autowired
+    private MerchantMapper merchantMapper;
+
     @Override
-    public double getRatio() {
-        return 0;
+    public boolean login(AdminCode code) {
+        return code.getCodeA().equals("1234") && code.getCodeB().equals("abcd")
+                && code.getCodeC().equals("1234") && code.getCodeD().equals("abcd")
+                && code.getPassword().equals("123456");
     }
 
     @Override
-    public List<Double> getRatios() {
-        return null;
+    public double getProfit() {
+        return profitMapper.getCurrentProfit().getRatio();
     }
 
     @Override
-    public void modifyRatio(double ratio) {
+    public List<Profit> getProfits() {
+        return profitMapper.getProfits();
+    }
 
+    @Override
+    public void modifyProfit(double ratio) {
+        Profit profit = new Profit();
+        profit.setEffectDate(new Date());
+        profit.setRatio(ratio);
+        profitMapper.insertSelective(profit);
     }
 
     @Override
@@ -51,16 +75,26 @@ public class AdminManageServiceImpl implements AdminManageService {
 
     @Override
     public List<MerchantInfo> getApplies() {
-        return null;
+        List<Merchant> merchants = merchantMapper.getMerchantOfOneVertification(MerchantVerEnum.BEFORE_APPROVAL);
+        List<MerchantInfo> infos = new ArrayList<>();
+        for(Merchant merchant: merchants){
+            MerchantInfo info = new MerchantInfo();
+            info.setName(merchant.getName());
+            info.setAddress(merchant.getAddress());
+            info.setType(merchant.getType());
+            info.setVerEnum(merchant.getVertification());
+            infos.add(info);
+        }
+        return infos;
     }
 
     @Override
     public void failApply(int mer_id) {
-
+        merchantMapper.changeVertification(mer_id, MerchantVerEnum.GET_DISAPPROVAL);
     }
 
     @Override
     public void passApply(int mer_id) {
-
+        merchantMapper.changeVertification(mer_id, MerchantVerEnum.AFTER_VERTIFICATION);
     }
 }

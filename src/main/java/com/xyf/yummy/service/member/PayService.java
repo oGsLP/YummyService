@@ -1,5 +1,7 @@
 package com.xyf.yummy.service.member;
 
+import com.xyf.yummy.entity.MemberPayment;
+
 /**
  * @你大爷: XYF
  * @author: lenovo XYF
@@ -9,6 +11,12 @@ package com.xyf.yummy.service.member;
  */
 public interface PayService {
 
+    /**
+     *
+     * @param mem_id
+     * @return
+     */
+    MemberPayment getPayment(int mem_id);
 
     /**
      *
@@ -32,19 +40,19 @@ public interface PayService {
 
     /**
      *
-     * @param pay_id
-     * @param price
+     * @param mem_id
+     * @param deal_id
      * @return
      */
-    boolean pay(int pay_id, double price);
+    boolean pay(int mem_id, int deal_id);
 
 
     /**
      *
-     * @param pay_id
-     * @param price
+     * @param mem_id
+     * @param deal_id
      * @return
      */
-    boolean refund(int pay_id, double price);
+    boolean refund(int mem_id, int deal_id);
 
 }

@@ -1,6 +1,9 @@
 package com.xyf.yummy.entity.sub;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.xyf.yummy.entity.Pack;
+
+import java.io.Serializable;
 
 /**
  * @你大爷: XYF
@@ -9,7 +12,8 @@ import com.xyf.yummy.entity.Pack;
  * @Time: 15:35
  * @Package: com.xyf.yummy.entity.sub
  */
-public class DealPack {
+@JsonIgnoreProperties(value = {"handler"})
+public class DealPack implements Serializable {
     private Pack pack;
     private Integer num;
 

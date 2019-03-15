@@ -1,5 +1,7 @@
 package com.xyf.yummy.model.enums;
 
+import com.xyf.yummy.entity.Deal;
+
 /**
  * @你大爷: XYF
  * @author: lenovo XYF
@@ -20,6 +22,14 @@ public enum DealStateEnum {
     DealStateEnum(int id, String name){
         this.id=id;
         this.name=name;
+    }
+
+    public static DealStateEnum getJsonEnum(String state){
+        DealStateEnum result = null;
+        for(DealStateEnum stateEnum: DealStateEnum.values())
+            if(stateEnum.toString().equals(state))
+                result=stateEnum;
+        return result;
     }
 
     public static DealStateEnum getStateById(int id){

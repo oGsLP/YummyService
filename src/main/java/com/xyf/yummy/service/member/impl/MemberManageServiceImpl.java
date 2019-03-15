@@ -1,13 +1,17 @@
 package com.xyf.yummy.service.member.impl;
 
 import com.xyf.yummy.dao.AddressMapper;
+import com.xyf.yummy.dao.MemberConsumptionMapper;
 import com.xyf.yummy.dao.MemberMapper;
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Member;
 import com.xyf.yummy.model.MemberInfo;
+import com.xyf.yummy.model.enums.MemLvEnum;
 import com.xyf.yummy.service.member.MemberManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @你大爷: XYF
@@ -22,6 +26,8 @@ public class MemberManageServiceImpl implements MemberManageService {
     private MemberMapper memberMapper;
     @Autowired
     private AddressMapper addressMapper;
+    @Autowired
+    private MemberConsumptionMapper consumptionMapper;
     @Override
     public MemberInfo getInfo(int id) {
         MemberInfo info = null;
@@ -33,8 +39,13 @@ public class MemberManageServiceImpl implements MemberManageService {
     }
 
     @Override
-    public void modifyInfo(MemberInfo info) {
-        memberMapper.updateByPrimaryKeySelective(setBackInfo(info));
+    public void modifyInfo(int id, MemberInfo info) {
+        memberMapper.updateByPrimaryKeySelective(setBackInfo(id,info));
+    }
+
+    @Override
+    public List<Address> getAddresses(int id) {
+        return addressMapper.findAddressesByMemberId(id);
     }
 
     @Override
@@ -68,11 +79,12 @@ public class MemberManageServiceImpl implements MemberManageService {
         return addressMapper.updateByPrimaryKey(address)==1;
     }
 
-    private Member setBackInfo(MemberInfo info){
+
+
+    private Member setBackInfo(int id,MemberInfo info){
         Member member = new Member();
-        member.setId(info.getId());
+        member.setId(id);
         member.setName(info.getName());
-        member.setEmail(info.getEmail());
         member.setPhone(info.getPhone());
         return member;
     }

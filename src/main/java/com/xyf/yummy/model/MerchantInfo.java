@@ -2,6 +2,7 @@ package com.xyf.yummy.model;
 
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.model.enums.MerchantTypeEnum;
+import com.xyf.yummy.model.enums.MerchantVerEnum;
 
 /**
  * @你大爷: XYF
@@ -11,18 +12,10 @@ import com.xyf.yummy.model.enums.MerchantTypeEnum;
  * @Package: com.xyf.yummy.model
  */
 public class MerchantInfo {
-    private int id;
     private String name;
     private MerchantTypeEnum type;
     private Address address;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    private MerchantVerEnum verEnum;
 
     public String getName() {
         return name;
@@ -46,5 +39,13 @@ public class MerchantInfo {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public MerchantVerEnum getVerEnum() {
+        return verEnum;
+    }
+
+    public void setVerEnum(MerchantVerEnum verEnum) {
+        this.verEnum = verEnum;
     }
 }

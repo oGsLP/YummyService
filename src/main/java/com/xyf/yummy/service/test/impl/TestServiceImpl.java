@@ -3,6 +3,7 @@ package com.xyf.yummy.service.test.impl;
 import com.xyf.yummy.dao.*;
 import com.xyf.yummy.entity.*;
 import com.xyf.yummy.model.ModelBean;
+import com.xyf.yummy.model.enums.DealStateEnum;
 import com.xyf.yummy.model.enums.MemValEnum;
 import com.xyf.yummy.service.test.TestService;
 import com.xyf.yummy.util.VertificationCodeGenerator;
@@ -31,6 +32,8 @@ public class TestServiceImpl implements TestService {
     private PackMapper packMapper;
     @Autowired
     private MemberDiscountMapper memberDiscountMapper;
+    @Autowired
+    private DealMapper dealMapper;
     @Override
     public ModelBean login() {
 //        System.out.println();
@@ -120,6 +123,10 @@ public class TestServiceImpl implements TestService {
         return packMapper.selectByPrimaryKey(pack_id);
     }
 
+    @Override
+    public Deal getDealByState(DealStateEnum stateEnum) {
+        return dealMapper.getDealsByState(stateEnum).get(0);
+    }
 
 
 }

@@ -2,6 +2,9 @@ package com.xyf.yummy.service.member;
 
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.model.MemberInfo;
+import com.xyf.yummy.model.enums.MemLvEnum;
+
+import java.util.List;
 
 /**
  * @你大爷: XYF
@@ -21,9 +24,18 @@ public interface MemberManageService {
 
     /**
      *
+     * @param id
      * @param info
      */
-    void modifyInfo(MemberInfo info);
+    void modifyInfo(int id, MemberInfo info);
+
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    List<Address> getAddresses(int id);
 
     /**
      *
@@ -61,5 +73,6 @@ public interface MemberManageService {
      * @return
      */
     boolean modifyAddress(Address address);
+
 
 }

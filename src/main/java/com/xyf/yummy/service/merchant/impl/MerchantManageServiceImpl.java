@@ -41,6 +41,7 @@ public class MerchantManageServiceImpl implements MerchantManageService {
         else {
             Merchant merchant = new Merchant();
             merchant.setCdkey(cdkey);merchant.setPassword(encryption.encrypt_md5_16bits(password));
+            merchant.setName("Merchant"+cdkey.substring(3));
             return merchantMapper.insertSelective(merchant)==1;
         }
     }
@@ -51,29 +52,29 @@ public class MerchantManageServiceImpl implements MerchantManageService {
     }
 
     @Override
-    public boolean submitInfo(MerchantInfo info) {
+    public boolean submitInfo(int mer_id, MerchantInfo info) {
         Address address = info.getAddress();
         addressMapper.insertSelective(address);
-        Merchant merchant = new Merchant();
+        Merchant merchant = merchantMapper.selectByPrimaryKey(mer_id);
         merchant.setAdId(address.getId());
         merchant.setType(info.getType());
         merchant.setName(info.getName());
-        return merchantMapper.insertSelective(merchant)==1;
+        return merchantMapper.updateByPrimaryKeySelective(merchant)==1;
     }
     //// address 的 insert 问题
 
     @Override
-    public MerchantInfo getInfo(String cdkey) {
-        Merchant merchant = merchantMapper.getMerchantByCdkey(cdkey);
+    public MerchantInfo getInfo(int mer_id) {
+        Merchant merchant = merchantMapper.selectByPrimaryKey(mer_id);
         return setBackMerchantInfo(merchant);
     }
 
     private MerchantInfo setBackMerchantInfo(Merchant merchant){
         MerchantInfo info = new MerchantInfo();
-        info.setId(merchant.getId());
         info.setName(merchant.getName());
         info.setType(merchant.getType());
         info.setAddress(merchant.getAddress());
+        info.setVerEnum(merchant.getVertification());
         return info;
     }
 }

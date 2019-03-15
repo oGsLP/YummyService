@@ -1,10 +1,8 @@
 package com.xyf.yummy.service.test;
 
-import com.xyf.yummy.entity.Address;
-import com.xyf.yummy.entity.Dish;
-import com.xyf.yummy.entity.MemberDiscount;
-import com.xyf.yummy.entity.Pack;
+import com.xyf.yummy.entity.*;
 import com.xyf.yummy.model.ModelBean;
+import com.xyf.yummy.model.enums.DealStateEnum;
 import com.xyf.yummy.model.enums.MemValEnum;
 
 import java.util.Date;
@@ -43,5 +41,7 @@ public interface TestService {
     List<Dish> getDishesByTime(Date date, int id);
 
     Pack getPack(int pack_id);
+
+    Deal getDealByState(DealStateEnum stateEnum);
 
 }

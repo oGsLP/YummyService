@@ -2,6 +2,9 @@ package com.xyf.yummy.service.shop;
 
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Deal;
+import com.xyf.yummy.model.enums.DealStateEnum;
+
+import java.util.List;
 
 /**
  * @你大爷: XYF
@@ -11,6 +14,49 @@ import com.xyf.yummy.entity.Deal;
  * @Package: com.xyf.yummy.service.shop
  */
 public interface DealManageService {
+
+    /**
+     *
+     * @return
+     */
+    List<Deal> getDeals();
+
+    /**
+     *
+     * @param mem_id
+     * @return
+     */
+    List<Deal> getMemberDeals(int mem_id);
+
+    /**
+     *
+     * @param mem_id
+     * @param state
+     * @return
+     */
+    List<Deal> getMemberDeals(int mem_id, DealStateEnum state);
+
+    /**
+     *
+     * @param mer_id
+     * @return
+     */
+    List<Deal> getMerchantDeals(int mer_id);
+
+    /**
+     *
+     * @param mer_id
+     * @param state
+     * @return
+     */
+    List<Deal> getMerchantDeals(int mer_id, DealStateEnum state);
+
+    /**
+     *
+     * @param state
+     * @return
+     */
+    List<Deal> getTypeDeals(DealStateEnum state);
 
 
     /**
@@ -29,12 +75,6 @@ public interface DealManageService {
      */
     boolean generateDeal(Deal deal);//to modify
 
-    /**
-     *
-     * @param id
-     * @return
-     */
-    boolean confirmDeal(int id);
 
     /**
      *
@@ -63,5 +103,7 @@ public interface DealManageService {
      * @return
      */
     boolean completeDeal(int id);
+
+
 
 }

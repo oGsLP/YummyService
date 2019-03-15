@@ -1,6 +1,8 @@
 package com.xyf.yummy.service.admin;
 
 import com.xyf.yummy.entity.MemberDiscount;
+import com.xyf.yummy.entity.Profit;
+import com.xyf.yummy.model.AdminCode;
 import com.xyf.yummy.model.MerchantInfo;
 
 import java.util.List;
@@ -16,21 +18,28 @@ public interface AdminManageService {
 
     /**
      *
+     * @param code
      * @return
      */
-    double getRatio();
+    boolean login(AdminCode code);
 
     /**
      *
      * @return
      */
-    List<Double> getRatios();
+    double getProfit();
+
+    /**
+     *
+     * @return
+     */
+    List<Profit> getProfits();
 
     /**
      *
      * @param ratio
      */
-    void modifyRatio(double ratio);
+    void modifyProfit(double ratio);
 
     /**
      *

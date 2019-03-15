@@ -36,17 +36,18 @@ public interface MerchantManageService {
 
     /**
      *
+     * @param mer_id
      * @param info
      * @return
      */
-    boolean submitInfo(MerchantInfo info);
+    boolean submitInfo(int mer_id, MerchantInfo info);
 
     /**
      *
-     * @param cdkey
+     * @param mer_id
      * @return
      */
-    MerchantInfo getInfo(String cdkey);
+    MerchantInfo getInfo(int mer_id);
 
 
 }
