@@ -32,7 +32,7 @@ public interface MerchantManageService {
      * @param password
      * @return
      */
-    boolean login(String cdkey,String password);
+    Merchant login(String cdkey,String password);
 
     /**
      *

@@ -29,7 +29,7 @@ public class MerchantInfoController {
         return new ModelBean(1,"",info);
     }
 
-    @PostMapping("")
+    @PutMapping("")
     public ModelBean modifyInfo(@PathVariable String mer_id, @RequestBody MerchantInfo info){
         int merchantId = Integer.parseInt(mer_id);
         int sign = manageService.submitInfo(merchantId,info)?1:0;

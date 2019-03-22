@@ -7,6 +7,7 @@ import com.xyf.yummy.entity.MemberDiscount;
 import com.xyf.yummy.entity.Merchant;
 import com.xyf.yummy.entity.Profit;
 import com.xyf.yummy.model.AdminCode;
+import com.xyf.yummy.model.ApplyModel;
 import com.xyf.yummy.model.MerchantInfo;
 import com.xyf.yummy.model.enums.MerchantVerEnum;
 import com.xyf.yummy.service.admin.AdminManageService;
@@ -74,18 +75,20 @@ public class AdminManageServiceImpl implements AdminManageService {
     }
 
     @Override
-    public List<MerchantInfo> getApplies() {
+    public List<ApplyModel> getApplies() {
         List<Merchant> merchants = merchantMapper.getMerchantOfOneVertification(MerchantVerEnum.BEFORE_APPROVAL);
-        List<MerchantInfo> infos = new ArrayList<>();
+        List<ApplyModel> applies = new ArrayList<>();
         for(Merchant merchant: merchants){
-            MerchantInfo info = new MerchantInfo();
-            info.setName(merchant.getName());
-            info.setAddress(merchant.getAddress());
-            info.setType(merchant.getType());
-            info.setVerEnum(merchant.getVertification());
-            infos.add(info);
+            ApplyModel apply = new ApplyModel();
+            apply.setName(merchant.getName());
+            apply.setAddress(merchant.getAddress());
+            apply.setType(merchant.getType());
+            apply.setVerEnum(merchant.getVertification());
+            apply.setMerId(merchant.getId());
+            apply.setCdkey(merchant.getCdkey());
+            applies.add(apply);
         }
-        return infos;
+        return applies;
     }
 
     @Override

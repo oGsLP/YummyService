@@ -1,5 +1,6 @@
 package com.xyf.yummy.controller.member;
 
+import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Deal;
 import com.xyf.yummy.model.DealModel;
 import com.xyf.yummy.model.ModelBean;
@@ -34,6 +35,8 @@ public class MemberDealController {
             return new ModelBean(1,"",null,dealManageService.getMemberDeals(memberId,state));
         }
     }
+
+
 
     @PostMapping("")
     public ModelBean generateDeal(@PathVariable String mem_id, @RequestParam(value = "mer_id") int merchantId, @RequestBody DealModel dealModel){

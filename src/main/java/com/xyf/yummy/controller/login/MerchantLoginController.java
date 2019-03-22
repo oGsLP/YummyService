@@ -1,5 +1,6 @@
 package com.xyf.yummy.controller.login;
 
+import com.xyf.yummy.entity.Merchant;
 import com.xyf.yummy.model.MerchantLog;
 import com.xyf.yummy.model.ModelBean;
 import com.xyf.yummy.service.merchant.MerchantManageService;
@@ -40,8 +41,9 @@ public class MerchantLoginController {
 
     @PostMapping("/login")
     public ModelBean login(@RequestBody MerchantLog log){
-        if(manageService.login(log.getCdkey(),log.getPassword()))
-            return new ModelBean(1,"Merchant "+log.getCdkey()+" Login successfully!");
+        Merchant merchant = manageService.login(log.getCdkey(),log.getPassword());
+        if(merchant!=null)
+            return new ModelBean(1,"Merchant "+log.getCdkey()+" Login successfully!",merchant);
         else return new ModelBean(0,"Incorrect cdkey or password!");
     }
 }

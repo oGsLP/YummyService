@@ -1,10 +1,13 @@
 package com.xyf.yummy.service.merchant.impl;
 
 import com.xyf.yummy.dao.AddressMapper;
+import com.xyf.yummy.dao.MerchantDiscountMapper;
 import com.xyf.yummy.dao.MerchantMapper;
 import com.xyf.yummy.entity.Address;
 import com.xyf.yummy.entity.Merchant;
+import com.xyf.yummy.entity.MerchantDiscount;
 import com.xyf.yummy.model.MerchantInfo;
+import com.xyf.yummy.model.enums.MerchantVerEnum;
 import com.xyf.yummy.service.merchant.MerchantManageService;
 import com.xyf.yummy.util.CDKeyGenerator;
 import com.xyf.yummy.util.PasswordEncryption;
@@ -28,6 +31,8 @@ public class MerchantManageServiceImpl implements MerchantManageService {
     private MerchantMapper merchantMapper;
     @Autowired
     private AddressMapper addressMapper;
+    @Autowired
+    private MerchantDiscountMapper discountMapper;
 
     @Override
     public String apply() {
@@ -42,23 +47,31 @@ public class MerchantManageServiceImpl implements MerchantManageService {
             Merchant merchant = new Merchant();
             merchant.setCdkey(cdkey);merchant.setPassword(encryption.encrypt_md5_16bits(password));
             merchant.setName("Merchant"+cdkey.substring(3));
-            return merchantMapper.insertSelective(merchant)==1;
+            boolean sign = merchantMapper.insertSelective(merchant)==1;
+            MerchantDiscount discount = new MerchantDiscount();
+            discount.setMerId(merchant.getId());
+            discount.setMin(35);
+            discount.setDiscount(5);
+            sign = sign&discountMapper.insertSelective(discount)==1;
+            return sign;
         }
     }
 
     @Override
-    public boolean login(String cdkey, String password) {
-        return merchantMapper.checkLogin(cdkey,encryption.encrypt_md5_16bits(password))!=null;
+    public Merchant login(String cdkey, String password) {
+        return merchantMapper.checkLogin(cdkey,encryption.encrypt_md5_16bits(password));
     }
 
     @Override
     public boolean submitInfo(int mer_id, MerchantInfo info) {
         Address address = info.getAddress();
+        address.setId(null);
         addressMapper.insertSelective(address);
         Merchant merchant = merchantMapper.selectByPrimaryKey(mer_id);
         merchant.setAdId(address.getId());
         merchant.setType(info.getType());
         merchant.setName(info.getName());
+        merchant.setVertification(MerchantVerEnum.BEFORE_APPROVAL);
         return merchantMapper.updateByPrimaryKeySelective(merchant)==1;
     }
     //// address 的 insert 问题

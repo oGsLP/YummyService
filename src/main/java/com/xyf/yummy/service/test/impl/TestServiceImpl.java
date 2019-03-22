@@ -34,6 +34,8 @@ public class TestServiceImpl implements TestService {
     private MemberDiscountMapper memberDiscountMapper;
     @Autowired
     private DealMapper dealMapper;
+    @Autowired
+    private MerchantMapper merchantMapper;
     @Override
     public ModelBean login() {
 //        System.out.println();
@@ -126,6 +128,11 @@ public class TestServiceImpl implements TestService {
     @Override
     public Deal getDealByState(DealStateEnum stateEnum) {
         return dealMapper.getDealsByState(stateEnum).get(0);
+    }
+
+    @Override
+    public List<Merchant> getUsu(int mem_id) {
+        return merchantMapper.getMostUsuallyMerchants(mem_id);
     }
 
 

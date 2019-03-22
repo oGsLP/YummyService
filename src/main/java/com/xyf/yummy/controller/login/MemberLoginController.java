@@ -1,5 +1,6 @@
 package com.xyf.yummy.controller.login;
 
+import com.xyf.yummy.entity.Member;
 import com.xyf.yummy.model.MemberLog;
 import com.xyf.yummy.model.ModelBean;
 import com.xyf.yummy.service.member.MemberLoginService;
@@ -25,12 +26,12 @@ public class MemberLoginController {
     @PostMapping("/login")
     public ModelBean checkLogin(@RequestBody MemberLog log){
         ModelBean modelBean;
-        String username=loginService.login(log);
-        if(username!=null){
-            modelBean=new ModelBean(1,"User "+username+" Login!",username);
+        Member member=loginService.login(log);
+        if(member!=null){
+            modelBean=new ModelBean(1,"User "+member.getName()+" Login!",member);
         }
         else {
-            modelBean=new ModelBean(0,"Not correct email or password!");
+            modelBean=new ModelBean(0,"Not correct email or password, or maybe your account had been cancelled");
         }
         return modelBean;
     }
@@ -48,9 +49,9 @@ public class MemberLoginController {
     }
 
     @PostMapping("/sendCode")
-    public ModelBean sendCode(@RequestBody String email){
-        String code = loginService.getKey(email);
-        return new ModelBean(1,"Already sent!",code);
+    public ModelBean sendCode(@RequestBody MemberLog log){
+        loginService.getKey(log.getEmail());
+        return new ModelBean(1,"Already sent!");
     }
 
 }

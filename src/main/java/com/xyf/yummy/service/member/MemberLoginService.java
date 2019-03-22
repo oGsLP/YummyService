@@ -1,5 +1,6 @@
 package com.xyf.yummy.service.member;
 
+import com.xyf.yummy.entity.Member;
 import com.xyf.yummy.model.MemberLog;
 
 /**
@@ -25,19 +26,19 @@ public interface MemberLoginService {
      * @param email
      * @return
      */
-    String getKey(String email);
+    void getKey(String email);
 
     /**
      *
      * @param log
      * @return
      */
-    String login(MemberLog log);
+    Member login(MemberLog log);
 
     /**
      *
-     * @param email
+     * @param id
      */
-    void cancelAccount(String email);
+    void cancelAccount(Integer id);
 
 }

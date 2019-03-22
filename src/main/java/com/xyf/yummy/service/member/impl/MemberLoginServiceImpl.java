@@ -4,6 +4,7 @@ import com.xyf.yummy.dao.MemberMapper;
 import com.xyf.yummy.entity.Member;
 import com.xyf.yummy.model.MemberLog;
 import com.xyf.yummy.model.enums.MemValEnum;
+import com.xyf.yummy.service.member.MailService;
 import com.xyf.yummy.service.member.MemberLoginService;
 import com.xyf.yummy.util.PasswordEncryption;
 import com.xyf.yummy.util.UUIDGenerator;
@@ -27,6 +28,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private VertificationCodeGenerator codeGenerator = VertificationCodeGenerator.getInstance();
     @Autowired
     private MemberMapper memberMapper;
+    @Autowired
+    private MailService mailService;
+
     @Override
     public boolean register(MemberLog log) {
         String email=log.getEmail();
@@ -44,22 +48,19 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     @Override
-    public String getKey(String email) {
+    public void getKey(String email) {
         String code=codeGenerator.getVertificationCode();
-        codeGenerator.sendCode(email,code);
-        return code;
+        mailService.sendCode(email,code);
     }
 
 
     @Override
-    public String login(MemberLog log) {
-        return memberMapper.checkLogin(log.getEmail(),encryption.encrypt_md5_16bits(log.getPassword()));
+    public Member login(MemberLog log) {
+        return memberMapper.checkLogin(log.getEmail(),encryption.encrypt_md5_16bits(log.getPassword()),MemValEnum.REGISTERED);
     }
 
     @Override
-    public void cancelAccount(String email) {
-        if(memberMapper.getIdByEmail(email) == null) {
-            memberMapper.cancelAccount(memberMapper.getIdByEmail(email),MemValEnum.CANCELLED);
-        }
+    public void cancelAccount(Integer id) {
+        memberMapper.cancelAccount(id,MemValEnum.CANCELLED);
     }
 }

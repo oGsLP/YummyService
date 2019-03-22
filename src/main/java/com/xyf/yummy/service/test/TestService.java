@@ -44,4 +44,6 @@ public interface TestService {
 
     Deal getDealByState(DealStateEnum stateEnum);
 
+    List<Merchant> getUsu(int mem_id);
+
 }

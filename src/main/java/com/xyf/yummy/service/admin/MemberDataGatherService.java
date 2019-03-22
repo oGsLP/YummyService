@@ -1,6 +1,8 @@
 package com.xyf.yummy.service.admin;
 
 import com.xyf.yummy.entity.Deal;
+import com.xyf.yummy.entity.MemberConsumption;
+import com.xyf.yummy.entity.Merchant;
 
 import java.util.List;
 
@@ -13,6 +15,17 @@ import java.util.List;
  */
 public interface MemberDataGatherService {
 
-    List<Deal> getDeals(int mem_id);
+    /**
+     *
+     * @param memberId
+     * @return
+     */
+    MemberConsumption getConsumption(int memberId);
 
+    /**
+     *
+     * @param memberId
+     * @return
+     */
+    List<Merchant> getMostUsually(int memberId);
 }

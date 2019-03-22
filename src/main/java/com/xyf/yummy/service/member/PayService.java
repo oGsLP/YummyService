@@ -1,6 +1,7 @@
 package com.xyf.yummy.service.member;
 
 import com.xyf.yummy.entity.MemberPayment;
+import com.xyf.yummy.model.enums.MemLvEnum;
 
 /**
  * @你大爷: XYF
@@ -54,5 +55,15 @@ public interface PayService {
      * @return
      */
     boolean refund(int mem_id, int deal_id);
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    double getDiscountById(int id);
+
+
+    MemLvEnum getLevelById(int id);
 
 }

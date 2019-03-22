@@ -1,9 +1,11 @@
 package com.xyf.yummy.controller.member;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.xyf.yummy.entity.MemberPayment;
 import com.xyf.yummy.model.ModelBean;
 import com.xyf.yummy.model.PaymentModel;
 import com.xyf.yummy.model.enums.DealStateEnum;
+import com.xyf.yummy.model.enums.MemLvEnum;
 import com.xyf.yummy.service.member.PayService;
 import com.xyf.yummy.service.shop.DealManageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,4 +61,19 @@ public class MemberPayController {
         }
         return new ModelBean(sign,msg);
     }
+
+    @GetMapping("/discount")
+    public ModelBean getDiscount(@PathVariable("mem_id") String mem_id){
+        int memberId = Integer.parseInt(mem_id);
+        double discount=payService.getDiscountById(memberId);
+        return new ModelBean(1,"",discount);
+    }
+
+    @GetMapping("/level")
+    public ModelBean getLevel(@PathVariable("mem_id") String mem_id){
+        int memberId = Integer.parseInt(mem_id);
+        MemLvEnum lvEnum=payService.getLevelById(memberId);
+        return new ModelBean(1,"",lvEnum);
+    }
+
 }

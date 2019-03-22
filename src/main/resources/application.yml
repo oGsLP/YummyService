@@ -34,6 +34,15 @@ spring:
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
 ## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+  mail:
+    host: smtp.163.com    #邮箱服务器地址
+    username: 15996303390@163.com   #邮箱账号
+    password: lpfdlj088788           #邮箱密码
+    default-encoding: utf-8    #默认编码
+
+mail:
+  fromMail:
+    addr: 15996303390@163.com
 
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml

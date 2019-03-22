@@ -3,6 +3,7 @@ package com.xyf.yummy.service.admin;
 import com.xyf.yummy.entity.MemberDiscount;
 import com.xyf.yummy.entity.Profit;
 import com.xyf.yummy.model.AdminCode;
+import com.xyf.yummy.model.ApplyModel;
 import com.xyf.yummy.model.MerchantInfo;
 
 import java.util.List;
@@ -57,7 +58,7 @@ public interface AdminManageService {
      *
      * @return
      */
-    List<MerchantInfo> getApplies();
+    List<ApplyModel> getApplies();
 
     /**
      *

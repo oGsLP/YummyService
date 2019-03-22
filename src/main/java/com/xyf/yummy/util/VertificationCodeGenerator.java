@@ -1,5 +1,11 @@
 package com.xyf.yummy.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
 import java.util.Random;
 
 /**
@@ -10,6 +16,7 @@ import java.util.Random;
  * @Package: com.xyf.yummy.util
  */
 public class VertificationCodeGenerator {
+
     private static VertificationCodeGenerator generator;
     private VertificationCodeGenerator(){}
     public static VertificationCodeGenerator getInstance(){
@@ -22,7 +29,4 @@ public class VertificationCodeGenerator {
         return String.valueOf(new Random().nextInt(899999) + 100000);
     }
 
-    public void sendCode(String email,String code){
-        //
-    }
 }

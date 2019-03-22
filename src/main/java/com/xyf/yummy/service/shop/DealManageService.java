@@ -62,11 +62,11 @@ public interface DealManageService {
     /**
      *
      * @param memberAddress
-     * @param merchantAddress
+     * @param merchantId
      * @param time
      * @return
      */
-    boolean checkDistance(Address memberAddress, Address merchantAddress, int time);
+    boolean checkDistance(Address memberAddress, int merchantId, int time);
 
     /**
      *
