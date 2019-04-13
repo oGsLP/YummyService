@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.MemberDiscountMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.MemberDiscount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="level" jdbcType="INTEGER" property="level" typeHandler="com.xyf.yummy.typeHandler.MemLvTypeHandler" />
+    <result column="min" jdbcType="DOUBLE" property="min" />
+    <result column="discount" jdbcType="DOUBLE" property="discount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.level, ${alias}.min, ${alias}.discount
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="md"/>
+    </include>
+    from t_member_discount md
+    where md.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_member_discount
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.MemberDiscount">
+    insert into t_member_discount (id, level, 
+      min, discount)
+    values (#{id,jdbcType=INTEGER}, #{level,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MemLvTypeHandler}, 
+      #{min,jdbcType=DOUBLE}, #{discount,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.MemberDiscount">
+    insert into t_member_discount
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="min != null">
+        min,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MemLvTypeHandler},
+      </if>
+      <if test="min != null">
+        #{min,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.MemberDiscount">
+    update t_member_discount
+    <set>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MemLvTypeHandler},
+      </if>
+      <if test="min != null">
+        min = #{min,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.MemberDiscount">
+    update t_member_discount
+    set level = #{level,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MemLvTypeHandler},
+      min = #{min,jdbcType=DOUBLE},
+      discount = #{discount,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDiscounts" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="md"/>
+    </include>
+    from t_member_discount md
+  </select>
+</mapper>

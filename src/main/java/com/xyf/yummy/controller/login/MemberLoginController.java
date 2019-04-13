@@ -50,8 +50,8 @@ public class MemberLoginController {
 
     @PostMapping("/sendCode")
     public ModelBean sendCode(@RequestBody MemberLog log){
-        loginService.getKey(log.getEmail());
-        return new ModelBean(1,"Already sent!");
+        String code = loginService.getKey(log.getEmail());
+        return new ModelBean(1,"Already sent!",code);
     }
 
 }

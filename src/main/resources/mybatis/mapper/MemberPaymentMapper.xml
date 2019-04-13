@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.MemberPaymentMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.MemberPayment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mem_id" jdbcType="INTEGER" property="memId" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="balance" jdbcType="DOUBLE" property="balance" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.mem_id, ${alias}.account, ${alias}.password, ${alias}.balance
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="mp"/>
+    </include>
+    from t_member_payment mp
+    where mp.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_member_payment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.MemberPayment">
+    insert into t_member_payment (id, mem_id, account, 
+      password, balance)
+    values (#{id,jdbcType=INTEGER}, #{memId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.MemberPayment" useGeneratedKeys="true" keyProperty="id">
+    insert into t_member_payment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memId != null">
+        mem_id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memId != null">
+        #{memId,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.MemberPayment">
+    update t_member_payment
+    <set>
+      <if test="memId != null">
+        mem_id = #{memId,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.MemberPayment">
+    update t_member_payment
+    set mem_id = #{memId,jdbcType=INTEGER},
+      account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findPaymentByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="mp"/>
+    </include>
+    from t_member_payment mp
+    where mp.mem_id = #{mem_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="checkAccount" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="mp"/>
+    </include>
+    from t_member_payment mp
+    where mp.mem_id = #{mem_id,jdbcType=INTEGER}
+    and mp.account=#{account,jdbcType=VARCHAR}
+    and mp.password=#{password,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getBalance" parameterType="java.lang.Integer" resultType="double">
+    select
+    mp.balance
+    from t_member_payment mp
+    where mp.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateBalance">
+    update t_member_payment mp
+    set
+    mp.balance = mp.balance - #{balance,jdbcType=DOUBLE}
+    where mp.id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

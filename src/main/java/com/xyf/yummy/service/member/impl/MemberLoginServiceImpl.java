@@ -9,7 +9,6 @@ import com.xyf.yummy.service.member.MemberLoginService;
 import com.xyf.yummy.util.PasswordEncryption;
 import com.xyf.yummy.util.UUIDGenerator;
 import com.xyf.yummy.util.VertificationCodeGenerator;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +47,10 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     @Override
-    public void getKey(String email) {
+    public String getKey(String email) {
         String code=codeGenerator.getVertificationCode();
         mailService.sendCode(email,code);
+        return code;
     }
 
 

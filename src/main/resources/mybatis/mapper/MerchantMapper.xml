@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.MerchantMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.Merchant">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cdkey" jdbcType="VARCHAR" property="cdkey" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="VARCHAR" property="type" typeHandler="com.xyf.yummy.typeHandler.MerTypTypeHandler" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="vertification" jdbcType="INTEGER" property="vertification" typeHandler="com.xyf.yummy.typeHandler.MerVerTypeHandler" />
+    <result column="ad_id" jdbcType="INTEGER" property="adId" />
+    <association property="discount" column="id" fetchType="lazy" select="com.xyf.yummy.dao.MerchantDiscountMapper.getDiscountByMerchantId"/>
+    <association property="address" column="ad_id" fetchType="lazy" select="com.xyf.yummy.dao.AddressMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.cdkey, ${alias}.name, ${alias}.type, ${alias}.password, ${alias}.ad_id, ${alias}.vertification
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m
+    where m.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_merchant
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.Merchant">
+    insert into t_merchant (id, cdkey, name, 
+      type,
+      password, ad_id, vertification
+      )
+    values (#{id,jdbcType=INTEGER}, #{cdkey,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.MerTypTypeHandler}, 
+      #{password,jdbcType=VARCHAR}, #{adId,jdbcType=INTEGER}, #{vertification,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MerVerTypeHandler}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.Merchant" useGeneratedKeys="true" keyProperty="id">
+    insert into t_merchant
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cdkey != null">
+        cdkey,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="vertification != null">
+        vertification,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cdkey != null">
+        #{cdkey,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.MerTypTypeHandler},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="adId != null">
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="vertification != null">
+        #{vertification,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MerVerTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.Merchant">
+    update t_merchant
+    <set>
+      <if test="cdkey != null">
+        cdkey = #{cdkey,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.MerTypTypeHandler},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="adId != null">
+        ad_id = #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="vertification != null">
+        vertification = #{vertification,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MerVerTypeHandler},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.Merchant">
+    update t_merchant
+    set cdkey = #{cdkey,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.MerTypTypeHandler},
+      password = #{password,jdbcType=VARCHAR},
+      ad_id = #{adId,jdbcType=INTEGER},
+      vertification = #{vertification,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MerVerTypeHandler}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllMerchants" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m
+  </select>
+
+  <select id="checkLogin" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m
+    where m.cdkey=#{cdkey,jdbcType=VARCHAR}
+    and m.password=#{password,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getMerchantByCdkey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m
+    where m.cdkey=#{cdkey,jdbcType=VARCHAR}
+  </select>
+
+  <update id="changeVertification">
+    update t_merchant m
+    set
+    m.vertification = #{verEnum,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MerVerTypeHandler}
+    where m.id = #{mer_id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="getMerchantOfOneVertification" parameterType="com.xyf.yummy.model.enums.MerchantVerEnum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m
+    where m.vertification=#{verEnum,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.MerVerTypeHandler}
+  </select>
+
+  <select id="getMerchantOfOneType" parameterType="com.xyf.yummy.model.enums.MerchantTypeEnum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m
+    where m.type=#{typeEnum,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.MerTypTypeHandler}
+  </select>
+
+  <select id="getMostUsuallyMerchants" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="m"/>
+    </include>
+    from t_merchant m, (
+      select d.mer_id,count(d.id) as count from t_deal d where d.mem_id=#{mem_id,jdbcType=INTEGER} group by d.mer_id order by count desc limit 3
+    ) c
+    where m.id=c.mer_id
+  </select>
+
+</mapper>

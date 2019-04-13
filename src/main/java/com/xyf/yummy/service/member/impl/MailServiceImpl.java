@@ -30,9 +30,6 @@ public class MailServiceImpl implements MailService {
         mail.setFrom(from); // 来自
         // 邮件内容
         mail.setText(code);
-
-        System.out.println(from);
-        System.out.println(email+code);
         mailSender.send(mail); // 发送
     }
 }

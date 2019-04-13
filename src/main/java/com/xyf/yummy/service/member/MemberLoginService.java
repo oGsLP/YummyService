@@ -26,7 +26,7 @@ public interface MemberLoginService {
      * @param email
      * @return
      */
-    void getKey(String email);
+    String getKey(String email);
 
     /**
      *

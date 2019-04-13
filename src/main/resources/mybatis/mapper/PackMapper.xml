@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.PackMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.Pack">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
+    <collection property="dishes" column="id" select="getDishesInPack"/>
+  </resultMap>
+  <resultMap id="DishInPack" type="com.xyf.yummy.entity.sub.DishInPack">
+    <result column="num" jdbcType="INTEGER" property="num"/>
+    <association property="dish" column="dish_id" select="com.xyf.yummy.dao.DishMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.mer_id, ${alias}.name, ${alias}.price, ${alias}.deadline
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="p"/>
+    </include>
+    from t_pack p
+    where p.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_pack
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.Pack">
+    insert into t_pack (id, mer_id, name, 
+      price, deadline)
+    values (#{id,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{deadline,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.Pack" useGeneratedKeys="true" keyProperty="id">
+    insert into t_pack
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.Pack">
+    update t_pack
+    <set>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.Pack">
+    update t_pack
+    set mer_id = #{merId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      deadline = #{deadline,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDishesInPack" parameterType="java.lang.Integer" resultMap="DishInPack">
+    select
+    dp.dish_id, dp.num
+    from t_dish_pack dp
+    where dp.pack_id = #{id,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="getPacks" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="p"/>
+    </include>
+    from t_pack p
+    where p.mer_id = #{mer_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getCurrentPacks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="p"/>
+    </include>
+    from t_pack p
+    where p.mer_id = #{mer_id,jdbcType=INTEGER}
+    and p.deadline>#{date,jdbcType=TIMESTAMP}
+  </select>
+
+  <insert id="addDishPack">
+    insert into t_dish_pack(pack_id,dish_id,num)
+    values(#{pack_id,jdbcType=INTEGER},#{dish_id,jdbcType=INTEGER},#{num,jdbcType=INTEGER})
+  </insert>
+
+  <delete id="deleteDishPack" parameterType="java.lang.Integer">
+    delete from t_dish_pack dp
+    where dp.pack_id=#{pack_id,jdbcType=INTEGER}
+  </delete>
+
+</mapper>

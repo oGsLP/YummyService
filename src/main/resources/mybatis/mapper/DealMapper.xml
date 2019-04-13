@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.DealMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.Deal">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mem_id" jdbcType="INTEGER" property="memId" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="ad_id" jdbcType="INTEGER" property="adId" />
+    <result column="origin_price" jdbcType="DOUBLE" property="originPrice" />
+    <result column="mem_discount" jdbcType="DOUBLE" property="memDiscount" />
+    <result column="mer_discount" jdbcType="INTEGER" property="merDiscount" />
+    <result column="final_price" jdbcType="DOUBLE" property="finalPrice" />
+    <result column="profit" jdbcType="DOUBLE" property="profit" />
+    <result column="actual_benefit" jdbcType="DOUBLE" property="actualBenefit" />
+    <result column="state" jdbcType="INTEGER" property="state" typeHandler="com.xyf.yummy.typeHandler.DealStateTypeHandler" />
+    <result column="refund" jdbcType="DOUBLE" property="refund" />
+    <result column="limit_time" jdbcType="INTEGER" property="limitTime" />
+    <result column="setup_time" jdbcType="TIMESTAMP" property="setupTime" />
+    <association property="memberAddress" column="ad_id" select="com.xyf.yummy.dao.AddressMapper.selectByPrimaryKey"/>
+    <collection property="dishes" column="id" fetchType="lazy" select="getDishesInDeal"/>
+    <collection property="packs" column="id" fetchType="lazy" select="getPacksInDeal"/>
+  </resultMap>
+  <resultMap id="DealDish" type="com.xyf.yummy.entity.sub.DealDish">
+    <result column="num" jdbcType="INTEGER" property="num"/>
+    <association property="dish" column="dish_id" fetchType="lazy" select="com.xyf.yummy.dao.DishMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="DealPack" type="com.xyf.yummy.entity.sub.DealPack">
+    <result column="num" jdbcType="INTEGER" property="num"/>
+    <association property="pack" column="pack_id" fetchType="lazy" select="com.xyf.yummy.dao.PackMapper.selectByPrimaryKey"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.mem_id, ${alias}.mer_id, ${alias}.ad_id, ${alias}.origin_price, ${alias}.mem_discount,
+    ${alias}.mer_discount, ${alias}.final_price, ${alias}.profit, ${alias}.actual_benefit,
+    ${alias}.state, ${alias}.refund, ${alias}.limit_time, ${alias}.setup_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+    where d.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_deal
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.Deal" useGeneratedKeys="true" keyProperty="id">
+    insert into t_deal (id, mem_id, mer_id, ad_id,
+      origin_price, mem_discount, mer_discount, 
+      final_price, profit, actual_benefit, 
+      state, 
+      refund, limit_time, setup_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{memId,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{adId,jdbcType=INTEGER},
+      #{originPrice,jdbcType=DOUBLE}, #{memDiscount,jdbcType=DOUBLE}, #{merDiscount,jdbcType=INTEGER}, 
+      #{finalPrice,jdbcType=DOUBLE}, #{profit,jdbcType=DOUBLE}, #{actualBenefit,jdbcType=DOUBLE}, 
+      #{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}, 
+      #{refund,jdbcType=DOUBLE}, #{limitTime,jdbcType=INTEGER}, #{setupTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.Deal" useGeneratedKeys="true" keyProperty="id">
+    insert into t_deal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="memId != null">
+        mem_id,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="adId != null">
+        ad_id,
+      </if>
+      <if test="originPrice != null">
+        origin_price,
+      </if>
+      <if test="memDiscount != null">
+        mem_discount,
+      </if>
+      <if test="merDiscount != null">
+        mer_discount,
+      </if>
+      <if test="finalPrice != null">
+        final_price,
+      </if>
+      <if test="profit != null">
+        profit,
+      </if>
+      <if test="actualBenefit != null">
+        actual_benefit,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="refund != null">
+        refund,
+      </if>
+      <if test="limitTime != null">
+        limit_time,
+      </if>
+      <if test="setupTime != null">
+        setup_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memId != null">
+        #{memId,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null">
+        #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="originPrice != null">
+        #{originPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="memDiscount != null">
+        #{memDiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="merDiscount != null">
+        #{merDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="finalPrice != null">
+        #{finalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="profit != null">
+        #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="actualBenefit != null">
+        #{actualBenefit,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler},
+      </if>
+      <if test="refund != null">
+        #{refund,jdbcType=DOUBLE},
+      </if>
+      <if test="limitTime != null">
+        #{limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="setupTime != null">
+        #{setupTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.Deal">
+    update t_deal
+    <set>
+      <if test="memId != null">
+        mem_id = #{memId,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="adId != null">
+        ad_id = #{adId,jdbcType=INTEGER},
+      </if>
+      <if test="originPrice != null">
+        origin_price = #{originPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="memDiscount != null">
+        mem_discount = #{memDiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="merDiscount != null">
+        mer_discount = #{merDiscount,jdbcType=INTEGER},
+      </if>
+      <if test="finalPrice != null">
+        final_price = #{finalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="profit != null">
+        profit = #{profit,jdbcType=DOUBLE},
+      </if>
+      <if test="actualBenefit != null">
+        actual_benefit = #{actualBenefit,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler},
+      </if>
+      <if test="refund != null">
+        refund = #{refund,jdbcType=DOUBLE},
+      </if>
+      <if test="limitTime != null">
+        limit_time = #{limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="setupTime != null">
+        setup_time = #{setupTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.Deal">
+    update t_deal
+    set mem_id = #{memId,jdbcType=INTEGER},
+      mer_id = #{merId,jdbcType=INTEGER},
+      ad_id = #{adId,jdbcType=INTEGER},
+      origin_price = #{originPrice,jdbcType=DOUBLE},
+      mem_discount = #{memDiscount,jdbcType=DOUBLE},
+      mer_discount = #{merDiscount,jdbcType=INTEGER},
+      final_price = #{finalPrice,jdbcType=DOUBLE},
+      profit = #{profit,jdbcType=DOUBLE},
+      actual_benefit = #{actualBenefit,jdbcType=DOUBLE},
+      state = #{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler},
+      refund = #{refund,jdbcType=DOUBLE},
+      limit_time = #{limitTime,jdbcType=INTEGER},
+      setup_time = #{setupTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getDishesInDeal" parameterType="java.lang.Integer" resultMap="DealDish">
+    select
+    dd.dish_id, dd.num
+    from t_deal_dish dd
+    where dd.deal_id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getPacksInDeal" parameterType="java.lang.Integer" resultMap="DealPack">
+    select
+    dp.pack_id, dp.num
+    from t_deal_pack dp
+    where dp.deal_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <insert id="insertDishInDeal">
+    insert into t_deal_dish (deal_id,dish_id,num)
+    values (#{deal_id,jdbcType=INTEGER}, #{dish_id,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
+  </insert>
+
+  <insert id="insertPackInDeal">
+    insert into t_deal_pack (deal_id,pack_id,num)
+    values (#{deal_id,jdbcType=INTEGER}, #{pack_id,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
+  </insert>
+
+  <update id="changeState">
+    update t_deal d
+    set d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+    where d.id=#{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDealsByMerchantId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getDealsByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+    where d.mem_id = #{mem_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getDealsByState" parameterType="com.xyf.yummy.model.enums.DealStateEnum" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+    where d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+
+  <select id="getDeals" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+  </select>
+
+  <select id="getMemberDealsByState" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+    where d.mem_id = #{mem_id,jdbcType=INTEGER}
+    and d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+
+  <select id="getMerchantDealsByState" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_deal d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+    and d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+
+  <select id="getComplete" resultType="Double">
+    select
+    sum(d.final_price) as sum
+    from t_deal d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+    and d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+
+  <select id="getTotal" resultType="Double">
+    select
+    sum(d.actual_benefit)
+    from t_deal d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+    and d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+
+  <select id="getRefund" resultType="Double">
+    select
+    sum(d.refund)
+    from t_deal d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+    and d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+
+  <select id="getProfit" resultType="Double">
+    select
+    sum(d.profit)
+    from t_deal d
+    where d.state=#{state,jdbcType=INTEGER,typeHandler=com.xyf.yummy.typeHandler.DealStateTypeHandler}
+  </select>
+</mapper>

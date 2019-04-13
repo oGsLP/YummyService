@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.ProfitMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.Profit">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ratio" jdbcType="DOUBLE" property="ratio" />
+    <result column="effect_date" jdbcType="TIMESTAMP" property="effectDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.ratio, ${alias}.effect_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="p"/>
+    </include>
+    from t_profit p
+    where p.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_profit
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.Profit">
+    insert into t_profit (id, ratio, effect_date
+      )
+    values (#{id,jdbcType=INTEGER}, #{ratio,jdbcType=DOUBLE}, #{effectDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.Profit">
+    insert into t_profit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ratio != null">
+        ratio,
+      </if>
+      <if test="effectDate != null">
+        effect_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="ratio != null">
+        #{ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="effectDate != null">
+        #{effectDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.Profit">
+    update t_profit
+    <set>
+      <if test="ratio != null">
+        ratio = #{ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="effectDate != null">
+        effect_date = #{effectDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.Profit">
+    update t_profit
+    set ratio = #{ratio,jdbcType=DOUBLE},
+      effect_date = #{effectDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCurrentProfit" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="p"/>
+    </include>
+    from t_profit p
+    order by p.id desc limit 1
+  </select>
+
+  <select id="getProfits" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="p"/>
+    </include>
+    from t_profit p
+  </select>
+</mapper>

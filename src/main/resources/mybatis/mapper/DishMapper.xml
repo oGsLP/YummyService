@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xyf.yummy.dao.DishMapper">
+  <resultMap id="BaseResultMap" type="com.xyf.yummy.entity.Dish">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="supply" jdbcType="INTEGER" property="supply" />
+    <result column="kind" jdbcType="VARCHAR" property="kind" typeHandler="com.xyf.yummy.typeHandler.DishTypTypeHandler" />
+    <result column="deadline" jdbcType="TIMESTAMP" property="deadline" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ${alias}.id, ${alias}.mer_id, ${alias}.name, ${alias}.price, ${alias}.supply, ${alias}.kind, ${alias}.deadline
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_dish d
+    where d.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_dish
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xyf.yummy.entity.Dish">
+    insert into t_dish (id, mer_id, name, 
+      price, supply, kind, 
+      deadline)
+    values (#{id,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{supply,jdbcType=INTEGER}, #{kind,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.DishTypTypeHandler}, 
+      #{deadline,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xyf.yummy.entity.Dish">
+    insert into t_dish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="supply != null">
+        supply,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="deadline != null">
+        deadline,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="supply != null">
+        #{supply,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.DishTypTypeHandler},
+      </if>
+      <if test="deadline != null">
+        #{deadline,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xyf.yummy.entity.Dish">
+    update t_dish
+    <set>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="supply != null">
+        supply = #{supply,jdbcType=INTEGER},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.DishTypTypeHandler},
+      </if>
+      <if test="deadline != null">
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xyf.yummy.entity.Dish">
+    update t_dish
+    set mer_id = #{merId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      supply = #{supply,jdbcType=INTEGER},
+      kind = #{kind,jdbcType=VARCHAR,typeHandler=com.xyf.yummy.typeHandler.DishTypTypeHandler},
+      deadline = #{deadline,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getDishes" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_dish d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="getCurrentDishes" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List">
+      <property name="alias" value="d"/>
+    </include>
+    from t_dish d
+    where d.mer_id = #{mer_id,jdbcType=INTEGER}
+    and d.deadline>#{date,jdbcType=TIMESTAMP}
+  </select>
+</mapper>
